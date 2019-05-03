@@ -21,7 +21,7 @@
     "StringFileInfo": {
         "Comments": "V2Ray Web UI",
         "CompanyName": "v2rayweb",
-        "FileDescription": "V2Ray Web UI 是 V2Ray 的一个基于 Web 的客户端",
+        "FileDescription": "一个基于 Web 的 V2Ray 客户端",
         "FileVersion": "v1.0.0.0",
         "InternalName": "V2RayWebUI.exe",
         "LegalCopyright": "Copyright (c) 2019 V2Ray Web",
