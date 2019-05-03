@@ -94,7 +94,7 @@ $(function() {
       manuallyStop = false;
       $.get("api/restart", function(data) {
         updateStatus();
-    });
+      });
     }).fail(function(data) {
       alert("错误：" + data.responseText);
     });

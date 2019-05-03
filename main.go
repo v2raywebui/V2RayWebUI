@@ -14,6 +14,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/andreyvit/systemproxy"
 	"github.com/getlantern/systray"
@@ -298,6 +299,7 @@ func routePath(w http.ResponseWriter, r *http.Request, trimURL string) {
 		}
 	} else if strings.HasPrefix(trimURL, "restart") {
 		stopV2Ray()
+		time.Sleep(time.Second)
 		startV2Ray()
 	} else {
 		// show error code 404 not found
