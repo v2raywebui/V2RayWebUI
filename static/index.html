@@ -1,0 +1,144 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>V2Ray Web</title>
+<link href="bootstrap.min.css" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+<h1>
+    V2Ray Web UI
+</h1>
+<span id="v2rayStatus" class="badge badge-success">V2Ray 正在运行</span>
+<div style="float: right; line-height: 4;">
+    <button id="startBtn" class="btn btn-primary">启动 V2Ray</button>
+    <button id="stopBtn" class="btn btn-danger">停止 V2Ray</button>
+    <button id="logBtn" class="btn btn-secondary">查看运行日志</button>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col">
+<div class="card">
+<div class="card-body">
+<h5 class="card-title"><strong>服务端搭建教程</strong></h5>
+<div class="setupGuide">
+使用 root 用户运行 V2Ray 官方的安装脚本：<br>
+<code>bash <(curl -L -s https://install.direct/go.sh)</code><br>
+脚本运行完成后，你需要：<br>
+1. 运行 <code>cat /etc/v2ray/config.json</code> 查看配置文件中的端口号和用户ID，也可按照需要进行修改。<br>
+2. 运行 <code>systemctl enable v2ray && systemctl restart v2ray</code> 设置开机自启并启动V2Ray。<br>
+3. 运行 <code>systemctl status v2ray</code> 查看 V2Ray 运行状态。
+</div>
+</div>
+</div>
+<div class="card" style="margin-top: 20px;">
+<div class="card-body">
+<h5 class="card-title"><strong>生成客户端配置</strong></h5>
+<form id="generateConfigForm">
+<div class="form-group row">
+<label class="col-sm-4 col-form-label">本地HTTP端口</label>
+<div class="col-sm-8">
+    <input type="number" class="form-control" id="input1" placeholder="local http port" value="2180" required>
+</div>
+</div>
+<div class="form-group row">
+<label class="col-sm-4 col-form-label">本地Socks端口</label>
+<div class="col-sm-8">
+    <input type="number" class="form-control" id="input2" placeholder="local socks port" value="2170" required>
+</div>
+</div>
+<div class="form-group row">
+<label class="col-sm-4 col-form-label">服务器地址</label>
+<div class="col-sm-8">
+    <input type="text" class="form-control" id="input3" placeholder="server address" required>
+</div>
+</div>
+<div class="form-group row">
+<label class="col-sm-4 col-form-label">服务器端口</label>
+<div class="col-sm-8">
+    <input type="number" class="form-control" id="input4" placeholder="server port" required>
+</div>
+</div>
+<div class="form-group row">
+<label class="col-sm-4 col-form-label">用户ID</label>
+<div class="col-sm-8">
+    <input type="text" class="form-control" id="input5" placeholder="user id" required>
+</div>
+</div>
+<div class="form-group row">
+<div class="col-sm-4 text-right">Mux 配置</div>
+<div class="col-sm-8">
+    <div class="form-check">
+    <input class="form-check-input" type="checkbox" id="input6">
+    <label class="form-check-label" for="input6" title="Mux 功能是在一条 TCP 连接上分发多个 TCP 连接的数据。Mux 是为了减少 TCP 的握手延迟而设计，而非提高连接的吞吐量。使用 Mux 看视频、下载或者测速通常都有反效果。Mux 只需要在客户端启用，服务器端自动适配。">开启 Mux 多路复用</label>
+    </div>
+</div>
+</div>
+<div class="form-group row">
+<div class="col-sm-4 text-right">路由配置</div>
+<div class="col-sm-8">
+    <div class="form-check">
+    <input class="form-check-input" type="checkbox" id="input7" checked>
+    <label class="form-check-label" for="input7" title="智能分流：局域网、国内网站直接连接，其他网站则使用代理">绕过局域网及大陆地址</label>
+    </div>
+</div>
+</div>
+<div class="form-group row">
+<div class="col-sm-12 text-center">
+    <button type="submit" class="btn btn-primary">生成</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div class="col">
+<div class="card">
+<div class="card-body">
+<h5 class="card-title"><strong>客户端配置文件（config.json）</strong></h5>
+<div id="editor" style="height: 600px;">
+</div>
+<div class="apply text-center" style="margin-top: 20px;">
+    <button type="button" id="saveConfig" class="btn btn-primary">保存并应用</button>
+</div>
+</div>
+</div>
+</div>
+</div> <!-- main row -->
+</div> <!-- main container -->
+<footer>
+    <div class="container">
+    </div>
+</footer>
+<!-- Modal -->
+<div class="modal fade" id="logModal" tabindex="-1" role="dialog" aria-labelledby="logModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logModalLabel">查看运行日志</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="jquery.min.js"></script>
+<script src="bootstrap.bundle.min.js"></script>
+<script src="ace.js"></script>
+<script src="mode-json.js"></script>
+<script src="theme-monokai.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+    
