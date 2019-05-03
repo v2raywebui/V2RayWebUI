@@ -1,5 +1,5 @@
-# V2RayWebUI
-V2Ray Web UI 是 V2Ray 的一个基于 Web 的客户端，功能特性：
+# V2Ray Web UI
+一个基于 Web 的 V2Ray 客户端，功能特性：
 
 - 简易服务端搭建教程
 - 简易客户端配置文件生成
